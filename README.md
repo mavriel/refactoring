@@ -36,3 +36,7 @@
   - Ide에서는 제공하지 않으니, const play=playFor(aPerformance) 로 변경후 inline
 - thisAmount를 인라인 (39-40)
   - 사실 이정도까지 인라인해도 속도에는 크게 영향이 없는 것을 알지만, 가슴에서 거부한다.
+- 적립 포인트 계산 코드 추출하기(40-42)
+  - volumeCredits += ... ~~~ if문 끝나는데까지 선택후 함수 추출
+- format 변수 제거하기 및 이름변경 (42-44)
+  - 변수 제거는 완벽하게 자동은 안 됨. const format= 이후부터 선택해서 함수 추출 후 수동으로 aNumber 추가
