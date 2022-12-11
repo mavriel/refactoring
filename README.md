@@ -67,4 +67,7 @@
 - customer, performances 정보를 data로 이동 (54-55)
   - performances를 얕은 복사를 사용. 책에서와는 다르게 그냥 es6 기능 사용
 - playFor / amountFor, volumeCreditsFor 함수 옮기기 및 data.performances에 저장(55-57)
-- 
+- totalAmount / totalVolumeCredits 이동 (58-59)
+  - 여기에 있는 방식으로 하려면 object를 바로 생성하는 방식 ({a: xxx})가 안 됨.
+  - 그래서 {} 선언후 값할당하는 방식으로 변경함
+  - 반복문 파이프라인으로 바꾸기는 Ramda써서 바꿔봄 

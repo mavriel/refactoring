@@ -1,8 +1,12 @@
+const _ = require("ramda");
+
 function statement(invoice, plays) {
-  const statementData = {
-    customer: invoice.customer,
-    performances: invoice.performances.map(enrichPerformance),
-  };
+  const statementData = {};
+  statementData.customer = invoice.customer;
+  statementData.performances = invoice.performances.map(enrichPerformance);
+  statementData.totalAmount = totalAmount(statementData);
+  statementData.totalVolumeCredits = totalVolumeCredits(statementData);
+
   return renderPlainText(statementData);
 
   function enrichPerformance(aPerformance) {
@@ -41,6 +45,14 @@ function statement(invoice, plays) {
       return result;
     }
   }
+
+  function totalAmount(data) {
+    return _.pipe(_.path(["performances"]), _.pluck("amount"), _.sum)(data);
+  }
+
+  function totalVolumeCredits(data) {
+    return _.pipe(_.path(["performances"]), _.pluck("volumeCredits"), _.sum)(data);
+  }
 }
 
 function renderPlainText(data) {
@@ -49,25 +61,9 @@ function renderPlainText(data) {
     result += ` ${perf.play.name}: ${usd(perf.amount)} (${perf.audience}석)\n`;
   }
 
-  result += `총액: ${usd(totalAmount())}\n`;
-  result += `적립 포인트: ${totalVolumeCredits()}점\n`;
+  result += `총액: ${usd(data.totalAmount)}\n`;
+  result += `적립 포인트: ${data.totalVolumeCredits}점\n`;
   return result;
-
-  function totalAmount() {
-    let result = 0;
-    for (let perf of data.performances) {
-      result += perf.amount;
-    }
-    return result;
-  }
-
-  function totalVolumeCredits() {
-    let result = 0;
-    for (let perf of data.performances) {
-      result += perf.volumeCredits;
-    }
-    return result;
-  }
 }
 
 function usd(aNumber) {
