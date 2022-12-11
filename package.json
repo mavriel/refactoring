@@ -2,9 +2,9 @@
   "name": "refactoring",
   "version": "1.0.0",
   "description": "hello",
-  "main": "index.js",
+  "main": "statement.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node statement.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mavriel/refactoring#readme",
   "devDependencies": {
+    "jest": "^29.3.1",
     "prettier": "^2.8.1"
   }
 }
