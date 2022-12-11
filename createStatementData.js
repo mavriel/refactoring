@@ -1,5 +1,6 @@
 const _ = require("ramda");
-const PerformanceCalculator = require("./PerformanceCalculator");
+const TragedyCalculator = require("./TragedyCalculator");
+const ComedyCalculator = require("./ComedyCalculator");
 
 function createStatementData(invoice, plays) {
   const statementData = {};
@@ -9,7 +10,7 @@ function createStatementData(invoice, plays) {
   statementData.totalVolumeCredits = totalVolumeCredits(statementData);
 
   function enrichPerformance(aPerformance) {
-    const calculator = new PerformanceCalculator(aPerformance, plays[aPerformance.playID]);
+    const calculator = createPerformanceCalculator(aPerformance, plays[aPerformance.playID]);
     const result = { ...aPerformance };
     result.play = calculator.play;
     result.amount = calculator.amount;
@@ -26,6 +27,17 @@ function createStatementData(invoice, plays) {
   }
 
   return statementData;
+}
+
+function createPerformanceCalculator(aPerformance, aPlay) {
+  switch (aPlay.type) {
+    case "tragedy":
+      return new TragedyCalculator(aPerformance, aPlay);
+    case "comedy":
+      return new ComedyCalculator(aPerformance, aPlay);
+    default:
+      throw new Error(`알 수 없는 장르: ${aPlay.type}`);
+  }
 }
 
 module.exports = createStatementData;
