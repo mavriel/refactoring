@@ -1,6 +1,6 @@
 function printOwing(invoice) {
   printBanner();
-  const outstanding = calculateOutstanding(invoice);
+  let outstanding = calculateOutstanding(invoice);
   recordDueDate(invoice);
   printDetail(invoice, outstanding);
 }
